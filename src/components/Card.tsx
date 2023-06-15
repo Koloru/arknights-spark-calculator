@@ -2,12 +2,9 @@
 const Card = ({
   img,
   category,
-  state,
-  setState
 }: {
   img: string;
-  state?: string;
-  setState: (e: string) => void
+
   category: string;
 }) => {
   return (
@@ -21,7 +18,7 @@ const Card = ({
         type="number"
         className="px-2 py-2 max-w-[225px] text-xl font-bold text-center  outline-none "
         value={state}
-        onChange={(e) => setState(e.target.value)}
+        onChange={(e) => setState({...state, state: e.target.value})}
       />
       <div className="w-full font-black tracking-wide text-center text-white border-gray-700 rounded-b-md bg-sky-500">
         {category}
