@@ -35,10 +35,11 @@ function reducer(
 }
 
 function App() {
+  let rolls = 0;
   const [state, dispatch] = useReducer(reducer, {
     orundum: 0,
-    originium: 2,
-    tickets: 1,
+    originium: 0,
+    tickets: 0,
   });
 
   const handleDispatch = (action: ReducerActionsTypes, payload: string) => {
@@ -47,6 +48,9 @@ function App() {
     dispatch({ type: action, payload: { ...data } });
   };
 
+  rolls = (state.originium * 180 + state.orundum + state.tickets * 600) / 600;
+  rolls = Math.floor(rolls);
+
   return (
     <div
       style={{
@@ -54,14 +58,14 @@ function App() {
       }}
       className="flex justify-center w-full h-full p-4 overflow-x-hidden bg-center bg-cover font-lato"
     >
-      <div className="flex flex-col gap-8 max-w-[900px]  p-4 w-full">
+      <div className="flex flex-col justify-center gap-8 max-w-[900px]  p-4 w-full">
         <div
-          className="text-2xl font-bold text-center text-white"
+          className="mb-10 text-6xl font-bold text-center text-white"
           onClick={() => console.log(state, "state")}
         >
           Arknights Spark Calculator
         </div>
-        <div className="flex flex-wrap justify-center gap-8">
+        <div className="flex flex-wrap items-center justify-center gap-8">
           <Card
             img={orundum}
             category="Orundum"
@@ -83,6 +87,9 @@ function App() {
             action="tickets"
             dispatch={handleDispatch}
           />
+        </div>
+        <div className="w-3/5 mx-auto text-2xl font-bold text-center bg-white">
+          {rolls} Rolls
         </div>
       </div>
     </div>
