@@ -1,41 +1,18 @@
+// Lib
 import { useReducer } from "react";
+
+// Components
+import Card from "./components/Card";
+import { reducer } from "./reducer";
+import { ReducerActionsTypes } from "./types";
+
+// Assets
 import ticket from "./assets/Headhunting_Permit.webp";
 import originium from "./assets/Originite_Prime_icon.webp";
 import orundum from "./assets/Orundum_icon.webp";
 import bg from "./assets/bg.webp";
-import Card from "./components/Card";
-
-const ReducerActionsTypes = {
-  ORUNDUM: "orundum",
-  ORIGINIUM: "originium",
-  TICKETS: "tickets",
-};
-
-export type ReducerActionsTypes = "orundum" | "originium" | "tickets";
-
-interface ReducerActions {
-  type: ReducerActionsTypes;
-  payload: { orundum: number; originium: number; tickets: number };
-}
-
-function reducer(
-  state: { orundum: number; originium: number; tickets: number },
-  action: ReducerActions
-) {
-  const { type, payload } = action;
-
-  switch (type) {
-    case ReducerActionsTypes.ORIGINIUM:
-    case ReducerActionsTypes.ORUNDUM:
-    case ReducerActionsTypes.TICKETS:
-      return { ...payload };
-    default:
-      return state;
-  }
-}
 
 function App() {
-  let rolls = 0;
   const [state, dispatch] = useReducer(reducer, {
     orundum: 0,
     originium: 0,
@@ -48,7 +25,8 @@ function App() {
     dispatch({ type: action, payload: { ...data } });
   };
 
-  rolls = (state.originium * 180 + state.orundum + state.tickets * 600) / 600;
+  let rolls =
+    (state.originium * 180 + state.orundum + state.tickets * 600) / 600;
   rolls = Math.floor(rolls);
 
   return (
@@ -59,10 +37,7 @@ function App() {
       className="flex justify-center w-full h-full p-4 overflow-x-hidden bg-center bg-cover font-lato"
     >
       <div className="flex flex-col justify-center gap-8 max-w-[900px]  p-4 w-full">
-        <div
-          className="mb-10 text-6xl font-bold text-center text-white"
-          onClick={() => console.log(state, "state")}
-        >
+        <div className="mb-10 text-6xl font-bold text-center text-white">
           Arknights Spark Calculator
         </div>
         <div className="flex flex-wrap items-center justify-center gap-8">

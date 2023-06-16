@@ -1,18 +1,14 @@
-import { ReducerActionsTypes } from "../App";
+import { ReducerActionsTypes } from "../types";
 
-const Card = ({
-  img,
-  category,
-  dispatch,
-  action,
-  state,
-}: {
+interface cardProps {
   img: string;
   state: number;
   action: ReducerActionsTypes;
   category: string;
   dispatch: (type: ReducerActionsTypes, payload: string) => void;
-}) => {
+}
+
+const Card = ({ img, category, dispatch, action, state }: cardProps) => {
   return (
     <div className={`relative flex flex-col items-center max-w-[200px]`}>
       <div className="absolute flex flex-col items-center justify-center -top-6">
