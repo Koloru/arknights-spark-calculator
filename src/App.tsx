@@ -1,34 +1,34 @@
 import { useReducer } from "react";
-import Card from "./components/Card";
-
 import ticket from "./assets/Headhunting_Permit.webp";
 import originium from "./assets/Originite_Prime_icon.webp";
 import orundum from "./assets/Orundum_icon.webp";
-import bg from "./assets/young-handsome-man-with-beard-isolated-keeping-arms-crossed-frontal-position_1368-132662.jpeg";
+import bg from "./assets/bg.webp";
+import Card from "./components/Card";
 
 const ReducerActionsTypes = {
-  ORUNDUM: "Orundum",
-  ORIGINIUM: "Originium",
-  TICKETS: "Tickets",
+  ORUNDUM: "orundum",
+  ORIGINIUM: "originium",
+  TICKETS: "tickets",
 };
 
-type ReducerActionsTypes = "Orundum" | "Originium" | "Tickets";
+export type ReducerActionsTypes = "orundum" | "originium" | "tickets";
 
 interface ReducerActions {
   type: ReducerActionsTypes;
-  payload: { orundum: number; tickets: number; originium: number };
+  payload: { orundum: number; originium: number; tickets: number };
 }
 
 function reducer(
-  state: { orundum: number; tickets: number; originium: number },
+  state: { orundum: number; originium: number; tickets: number },
   action: ReducerActions
 ) {
   const { type, payload } = action;
-  
+
   switch (type) {
     case ReducerActionsTypes.ORIGINIUM:
     case ReducerActionsTypes.ORUNDUM:
     case ReducerActionsTypes.TICKETS:
+      return { ...payload };
     default:
       return state;
   }
@@ -37,9 +37,15 @@ function reducer(
 function App() {
   const [state, dispatch] = useReducer(reducer, {
     orundum: 0,
-    tickets: 0,
-    originium: 0,
+    originium: 2,
+    tickets: 1,
   });
+
+  const handleDispatch = (action: ReducerActionsTypes, payload: string) => {
+    const data = { ...state };
+    data[action] = parseInt(payload) || 0;
+    dispatch({ type: action, payload: { ...data } });
+  };
 
   return (
     <div
@@ -48,14 +54,35 @@ function App() {
       }}
       className="flex justify-center w-full h-full p-4 overflow-x-hidden bg-center bg-cover font-lato"
     >
-      <div className="flex flex-col gap-8 max-w-[900px] border border-white rounded-md p-4 w-full">
-        <div className="text-2xl font-bold text-center text-white">
+      <div className="flex flex-col gap-8 max-w-[900px]  p-4 w-full">
+        <div
+          className="text-2xl font-bold text-center text-white"
+          onClick={() => console.log(state, "state")}
+        >
           Arknights Spark Calculator
         </div>
         <div className="flex flex-wrap justify-center gap-8">
-          <Card img={orundum} category="Orundum" />
-          <Card img={originium} category="Originium" />
-          <Card img={ticket} category="Headhunting Tickets" />
+          <Card
+            img={orundum}
+            category="Orundum"
+            action="orundum"
+            state={state.orundum}
+            dispatch={handleDispatch}
+          />
+          <Card
+            img={originium}
+            category="Originium"
+            state={state.originium}
+            action="originium"
+            dispatch={handleDispatch}
+          />
+          <Card
+            img={ticket}
+            category="Headhunting Tickets"
+            state={state.tickets}
+            action="tickets"
+            dispatch={handleDispatch}
+          />
         </div>
       </div>
     </div>
