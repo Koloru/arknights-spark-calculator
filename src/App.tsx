@@ -66,7 +66,7 @@ function App() {
           />
         </div>
         <div className="w-3/5 mx-auto text-2xl font-bold text-center bg-white">
-          {isNaN(rolls) ? 0 : rolls} Rolls
+          {rolls.toLocaleString("en-US")} Rolls
         </div>
       </div>
     </div>
