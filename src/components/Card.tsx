@@ -20,6 +20,7 @@ const Card = ({ img, category, dispatch, action, state }: cardProps) => {
         type="number"
         className="px-2 py-2 max-w-[225px] text-xl font-bold text-center  outline-none "
         value={state}
+        defaultValue={0}
         onChange={(e) => {
           dispatch(action, e.target.value);
         }}

@@ -21,13 +21,15 @@ function App() {
 
   const handleDispatch = (action: ReducerActionsTypes, payload: string) => {
     const data = { ...state };
-    data[action] = parseInt(payload) || 0;
+    data[action] = parseInt(payload);
     dispatch({ type: action, payload: { ...data } });
   };
 
-  let rolls =
-    (state.originium * 180 + state.orundum + state.tickets * 600) / 600;
-  rolls = Math.floor(rolls);
+  const originiumCalc = isNaN(state.originium) ? 0 : state.originium * 180;
+  const orundumCalc = isNaN(state.orundum) ? 0 : state.orundum;
+  const ticketsCalc = isNaN(state.tickets) ? 0 : state.tickets * 600;
+
+  const rolls = Math.floor((originiumCalc + orundumCalc + ticketsCalc) / 600);
 
   return (
     <div
@@ -64,7 +66,7 @@ function App() {
           />
         </div>
         <div className="w-3/5 mx-auto text-2xl font-bold text-center bg-white">
-          {rolls} Rolls
+          {isNaN(rolls) ? 0 : rolls} Rolls
         </div>
       </div>
     </div>
