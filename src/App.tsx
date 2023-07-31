@@ -11,7 +11,7 @@ import { ReducerActionsTypes, stateType } from "./types";
 import ticket from "./assets/Headhunting_Permit.webp";
 import originium from "./assets/Originite_Prime_icon.webp";
 import orundum from "./assets/Orundum_icon.webp";
-import bg from "./assets/bg.webp";
+import bg from "./assets/f4aad0d3a16b9c8b4590b69c9b1c48b9.jpg";
 
 function App() {
   const initialState = useReadLocalStorage<stateType>("Rolls") || {
