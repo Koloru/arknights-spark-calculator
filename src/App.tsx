@@ -1,6 +1,6 @@
 // Lib
 import { useReducer, useEffect } from "react";
-import { useDebounce, useLocalStorage, useReadLocalStorage } from "usehooks-ts";
+import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 
 // Components
 import Card from "./components/Card";
@@ -21,9 +21,7 @@ function App() {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const debouncedValue = useDebounce(state, 500);
-
-  const [currentRolls, setCurrentRolls] = useLocalStorage("Rolls", state);
+  const [, setCurrentRolls] = useLocalStorage("Rolls", state);
 
   const handleDispatch = (action: ReducerActionsTypes, payload: string) => {
     const data = { ...state };
@@ -39,7 +37,7 @@ function App() {
 
   useEffect(() => {
     setCurrentRolls(state);
-  }, [debouncedValue]);
+  }, [state, setCurrentRolls]);
 
   return (
     <div
