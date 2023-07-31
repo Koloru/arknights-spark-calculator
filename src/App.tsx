@@ -1,10 +1,11 @@
 // Lib
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
+import { useDebounce, useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 
 // Components
 import Card from "./components/Card";
 import { reducer } from "./reducer";
-import { ReducerActionsTypes } from "./types";
+import { ReducerActionsTypes, stateType } from "./types";
 
 // Assets
 import ticket from "./assets/Headhunting_Permit.webp";
@@ -13,11 +14,16 @@ import orundum from "./assets/Orundum_icon.webp";
 import bg from "./assets/bg.webp";
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, {
+  const initialState = useReadLocalStorage<stateType>("Rolls") || {
     orundum: 0,
     originium: 0,
     tickets: 0,
-  });
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const debouncedValue = useDebounce(state, 500);
+
+  const [currentRolls, setCurrentRolls] = useLocalStorage("Rolls", state);
 
   const handleDispatch = (action: ReducerActionsTypes, payload: string) => {
     const data = { ...state };
@@ -30,6 +36,10 @@ function App() {
   const ticketsCalc = isNaN(state.tickets) ? 0 : state.tickets * 600;
 
   const rolls = Math.floor((originiumCalc + orundumCalc + ticketsCalc) / 600);
+
+  useEffect(() => {
+    setCurrentRolls(state);
+  }, [debouncedValue]);
 
   return (
     <div
